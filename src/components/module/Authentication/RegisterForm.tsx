@@ -12,9 +12,11 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-import { z } from "zod";
+import {  z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/Password";
+import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
 
 const registerSchema = z
   .object({
@@ -35,10 +37,15 @@ const registerSchema = z
     path: ["confirmPassword"],
   });
 
+
+
 export function RegisterForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+
+ 
+  const [register ] = useRegisterMutation()
   
 
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -58,7 +65,15 @@ export function RegisterForm({
       password: data.password,
     };
 
-   console.log(userInfo);
+    try {
+     const result = await register(userInfo)
+     console.log(result);
+    //  sonner er kaj korte hbe ?
+      toast.success("User created successfully");
+     
+    } catch (error) {
+       console.error(error)
+    }
    
   };
 
