@@ -15,6 +15,7 @@ import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
+
 export function LoginForm({
   className,
   ...props
@@ -26,6 +27,7 @@ export function LoginForm({
     try {
       const res = await login(data).unwrap();
       console.log(res);
+      navigate('/')
     } catch (err:any) {
       console.error(err);
 
