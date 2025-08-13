@@ -35,7 +35,7 @@ export function LoginForm({
 
       if (res.success) {
         toast.success("Logged in successfully");
-        // navigate("/");
+        navigate("/");
       }
     } catch (err:any) {
       console.error(err);
