@@ -17,6 +17,12 @@ export interface ISidebar {
        url: string,
        component: ComponentType
   } [];
-}
+} 
+
+
 
 export type TRole = "SUPER_ADMIN" | "ADMIN" | "USER"
+
+
+
+

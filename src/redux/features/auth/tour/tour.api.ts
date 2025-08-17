@@ -33,7 +33,7 @@ export const tourApi = baseApi.injectEndpoints({
       }),
       providesTags: ["TOUR"],
     
-      transformResponse: (response) => response.data,
+     
     }),
   }),
 });
