@@ -1,4 +1,3 @@
-
 import App from "@/App";
 import DashBoardLayout from "@/components/layout/DashBoardLayout";
 import About from "@/pages/About";
@@ -13,56 +12,67 @@ import { withAuth } from "@/utils/withAuth";
 import { role } from "@/constnts/role";
 import type { TRole } from "@/types";
 import Unauthorized from "@/pages/Unauthorized ";
+import Tour from "@/pages/Tour";
+import TourDetails from "@/pages/TourDetails";
+import HomePage from "@/pages/HomePage";
 
-
- 
- 
 export const router = createBrowserRouter([
-    {
-        path: '/',
-        Component: App,
-        children: [
-            {
-                Component: withAuth(About),
-                path: '/about'
-            }
-        ]
-    },
-
+  {
+    path: "/",
+    Component: App,
+    children: [
       {
-        path: '/admin',
-        Component: withAuth(DashBoardLayout, role.superAdmin as TRole),
-        children:[
-     {index: true, element: <Navigate to= '/admin/analytices' />},
+        Component: HomePage,
+        index: true,
+      },
+      {
+        Component: withAuth(About),
+        path: "/about",
+      },
+      {
+        Component: Tour,
+        path: "/tours",
+      },
+      {
+        Component: TourDetails,
+        path: "tours/:id",
+      },
+    ],
+  },
 
-            ... generateRoutes(adminSidebarItems)
-        
-        ]
-    },
-    {
-        path: '/user',
-     Component:withAuth(DashBoardLayout, role.user as TRole),
-        children: [
-      {index: true, element: <Navigate to= '/user/bookings' />},
-           ...generateRoutes(userSidebarItems)
-        ]
-    },
-  
-    {
-        Component: LoginPage,
-        path: '/login'
-    },
-    {
-        Component: RegisterPage,
-        path: '/register'
-    },
-    {
-        Component: verify,
-        path: '/verify'
-    },
-    {
-        Component: Unauthorized,
-        path: '/unauthorized'
-    }
-    
-])
+  {
+    path: "/admin",
+    Component: withAuth(DashBoardLayout, role.superAdmin as TRole),
+    children: [
+      { index: true, element: <Navigate to="/admin/analytices" /> },
+
+      ...generateRoutes(adminSidebarItems),
+    ],
+  },
+  {
+    path: "/user",
+    Component: withAuth(DashBoardLayout, role.user as TRole),
+    children: [
+      { index: true, element: <Navigate to="/user/bookings" /> },
+      ...generateRoutes(userSidebarItems),
+    ],
+  },
+
+  {
+    Component: LoginPage,
+    path: "/login",
+  },
+  {
+    Component: RegisterPage,
+    path: "/register",
+  },
+  {
+    Component: verify,
+    path: "/verify",
+  },
+
+  {
+    Component: Unauthorized,
+    path: "/unauthorized",
+  },
+]);
