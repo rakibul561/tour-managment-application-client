@@ -1,11 +1,41 @@
-import { ExternalLink } from "lucide-react";
-
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import Logo from "@/assets/icons/Logo";
 
- export default  function HeroSection () {
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useGetDivisionQuery } from "@/redux/features/division/division.api";
+import { useState } from "react";
+ 
+
+
+
+export default function HeroSection() {
+
+
+  const [selectDivision, setSelectDivision] = useState<string | undefined> (undefined)
+
+    const { data: divisionData, isLoading: divisionIsLoading } =
+    useGetDivisionQuery(undefined); 
+
+
+    
+  const divisionOption = divisionData?.map(
+    (item: { _id: string; name: string }) => ({
+      label: item.name,
+      value: item._id,
+    })
+  );
+
+
   return (
     <section className="relative overflow-hidden py-32">
       <div className="absolute inset-x-0 top-0 flex h-full w-full items-center justify-center opacity-100">
@@ -19,11 +49,11 @@ import Logo from "@/assets/icons/Logo";
         <div className="mx-auto flex max-w-5xl flex-col items-center">
           <div className="flex flex-col items-center gap-6 text-center">
             <div className="rounded-xl bg-background/30 p-4 shadow-sm backdrop-blur-sm">
-              <Logo/>
+              <Logo />
             </div>
             <div>
               <h1 className="mb-6 text-2xl font-bold tracking-tight text-pretty lg:text-5xl">
-               Explore the beauty of bangladesh
+                Explore the beauty of bangladesh
                 <span className="text-primary">Blocks</span>
               </h1>
               <p className="mx-auto max-w-3xl text-muted-foreground lg:text-xl">
@@ -33,18 +63,42 @@ import Logo from "@/assets/icons/Logo";
               </p>
             </div>
             <div className="mt-6 flex justify-center gap-3">
-              
-              <Button >
-                <Link to= "/tours"> Explore More</Link>
-                
-                <ExternalLink className="ml-2 h-4 transition-transform group-hover:translate-x-0.5" />
-              </Button>
+              <Select
+                onValueChange={(value)=> setSelectDivision(value)}
+              >
+                <SelectTrigger className="w-[300px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Divisions</SelectLabel>
+                    {divisionOption?.map(
+                      (item: { value: string; label: string }) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      )
+                    )}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+               {
+                selectDivision ? (
+                 <Button asChild>
+                  <Link to={`/tours?division=${selectDivision}`} > Search</Link>
+                 </Button>
+                ):
+                 
+                <Button  disabled>
+                  Search
+                </Button>
+
+               }
+
             </div>
-            
           </div>
         </div>
       </div>
     </section>
   );
-};
-
+}
