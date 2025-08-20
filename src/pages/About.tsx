@@ -4,8 +4,10 @@ const About = () => {
     return (
         <div>
 
-            <h2> this is a About page</h2>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus nesciunt rem adipisci nemo natus deserunt, corporis aspernatur? Fuga, dolore eum repellat delectus, est distinctio, quaerat cupiditate assumenda sapiente dolor voluptas.
+            <h2> this is a Tourist Website </h2>
+            <p>bangladesh a is a very beautifull . your life enjoy so contact us 
+            </p>
+            L
             
         </div>
     );
